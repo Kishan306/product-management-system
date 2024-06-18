@@ -1,0 +1,65 @@
+<nav class="bg-gray-800 py-4 min-h-20 sticky top-0 z-50 w-full">
+    <div class="  mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between  items-center">
+        <!-- Logo -->
+        <div class="wrapper block md:hidden">
+          <button class="exclude" (click)="toggleCollapsed()">
+            <i class="pi pi-bars text-2xl text-white mr-3"></i>
+          </button>
+        </div>
+        <div class="origin-top-left z-50 menu absolute left-4 top-16 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" *ngIf="isCollapsed">
+          <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+            <a *ngIf="!isAdmin" routerLink="products" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem"><i class="pi pi-shop mr-2"></i>Products</a>
+            <a *ngIf="isAdmin" routerLink="adminproductslist" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem"><i class="pi pi-shop mr-2"></i>Products List</a>
+            <a *ngIf="!isAdmin" routerLink="cart" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem"><i class="pi pi-shopping-cart mr-2"></i>Cart</a>
+            <a *ngIf="!isAdmin" routerLink="wishlist" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem"><i class="pi pi-heart mr-2"></i>Wishlist</a>
+            <a *ngIf="isAdmin" routerLink="add-product" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem"><i class="pi pi-plus mr-2"></i>Add Product</a>
+          </div>
+        </div>
+
+        <div class="flex-shrink-0">
+          <p class="text-white hover:text-sky-200 text-3xl md:text-4xl font-bold transition duration-300 ease-in-out">Shopper</p>
+        </div>
+  
+        <!-- Navigation Links -->
+        <div class="hidden md:block ml-10 mr-auto">
+          <ul class="flex space-x-12 text-white text-lg font-light">
+            <li *ngIf="!isAdmin"><a routerLink="products" class="hover:text-gray-300"><i class="pi pi-shop mr-2"></i>Products</a></li>
+            <li *ngIf="isAdmin"><a routerLink="adminproductslist" class="hover:text-gray-300"><i class="pi pi-shop mr-2"></i>Products List</a></li>
+            <li *ngIf="!isAdmin"><a routerLink="cart" class="hover:text-gray-300"><i class="pi pi-shopping-cart mr-2"></i>Cart</a></li>
+            <li *ngIf="!isAdmin"><a routerLink="wishlist" class="hover:text-gray-300"><i class="pi pi-heart mr-2"></i>Wishlist</a></li>
+            <li *ngIf="isAdmin"><a routerLink="add-product" class="hover:text-gray-300"><i class="pi pi-plus mr-2"></i>Add Product</a></li>
+          </ul>
+        </div>
+
+        <div class="ml-auto relative" *ngIf="loginStatus === false">
+          <button (click)="onLoginClick()" nz-button nzSize="large" nzShape="round" class="bg-white md:mr-2 py-2 px-3 rounded-2xl font-semibold hover:bg-gray-100 scale-75 md:scale-100 md:active:scale-90 transition duration-200 ease-in-out">Login</button>
+          <button (click)="onSignUpClick()" nz-button nzSize="large" nzShape="round" class="bg-white py-2 px-3 rounded-2xl font-semibold hover:bg-gray-100 scale-75 md:scale-100 md:active:scale-90 transition duration-200 ease-in-out">Sign Up</button>
+        </div>
+  
+        <!-- User Profile Dropdown (hidden on mobile) -->
+        <div class="ml-4 relative"  *ngIf="loginStatus === true">
+          <div>
+            <button nz-dropdown nz-tooltip nzTooltipTitle="{{userMail}} | {{role}}" nzTooltipPlacement="left" [nzDropdownMenu]="menu" type="button" class="text-white hover:text-gray-300 focus:outline-none exclude" (click)="onUserMenuClick()">
+              <!-- <nz-avatar [nzText]="avatar" nzSize="large" class="bg-gray-50 hover:bg-gray-200 transition duration-200 text-black font-bold text-xl scale-100 translate-x-0"></nz-avatar> -->
+              <p-avatar 
+              [label]="avatar" 
+              
+              size="large" 
+              [style]="{ 'background-color': 'rgb(249 250 251)', 'color': '#2a1261', 'width': '48px', 'height': '48px', 'font-size': '20px' }" 
+              class="font-bold"
+              shape="circle" />
+            </button>
+          </div>
+          <!-- Dropdown menu with user options -->
+          <div class="origin-top-right z-50 menu absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" *ngIf="menuopen">
+            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+              <!-- <a routerLink="my-profile" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem">My Profile</a>
+              <a routerLink="my-orders" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem ">My Orders</a> -->
+              <a (click)="onLogOutClick()" class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 font-semibold" role="menuitem">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,73 @@
+<div class="flex justify-start p-6">
+  <h2 class="md:ml-24 text-3xl md:text-5xl font-bold">Cart</h2>
+</div>
+<div *ngIf="cartItems.length > 0" class="container mx-auto px-4 py-8">
+  <div class="flex md:justify-center items-center">
+    <table class="table-auto w-full overflow-y-scroll">
+      <thead>
+        <tr>
+          <th class="px-4 text-lg py-2">Image</th>
+          <th class="px-4 text-lg py-2">Product</th>
+          <th class="px-4 text-lg py-2">Price(₹)</th>
+          <th class="px-4 text-lg py-2">Quantity</th>
+          <th class="px-4 text-lg py-2">Total Price(₹)</th>
+          <th class="px-4 text-lg py-2">Action</th>
+          <!-- New column for buttons -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems; let i = index">
+          <td class="border text-center">
+            <img src="{{ item.imageUrl }}" class="h-24 w-24 mx-auto" />
+          </td>
+          <td class="border px-4 py-2 text-center">{{ item.name }}</td>
+          <td class="border px-4 py-2 text-center">₹{{ actualPrice(item.price, item.discount || 0) }}</td>
+          <td class="border px-4 py-2 text-center">
+            <div class="flex items-center justify-center">
+              <button
+                (click)="decrementQuantity(i)"
+                [disabled]="quantities[i] <= 1"
+                class="px-2 py-2 bg-red-500 hover:bg-red-600 text-white disabled:invisible rounded active:scale-90 transition duration-200 ease-in-out"
+              >
+                <i class="pi pi-minus"></i>
+              </button>
+              <!-- Minus button -->
+              <p class="mx-5">{{ quantities[cartItems.indexOf(item)] }}</p>
+              <button
+                (click)="incrementQuantity(i)" 
+                [disabled]="quantities[i] >= item.totalstock"
+                class="px-2 py-2 bg-green-500 hover:bg-green-600 disabled:invisible text-white rounded active:scale-90 transition duration-200 ease-in-out"
+              >
+                <i class="pi pi-plus"></i>
+              </button>
+              <!-- Plus button -->
+            </div>
+          </td>
+          <td class="border px-4 py-2 text-center">
+            ₹{{ actualPrice(item.price, item.discount || 0) * quantities[cartItems.indexOf(item)] }}
+          </td>
+          <td class="border px-4 py-2 text-center">
+            <button
+              class="px-2 py-1 bg-red-500 text-white rounded active:scale-90 transition duration-200 ease-in-out"
+              (click)="removeItemFromCart(item.id)"
+            >
+              Remove
+            </button>
+            <!-- Button to remove item -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="my-8 flex items-end flex-col">
+    <p class="font-semibold text-xl text-gray-500">Grand Total: <span class="text-3xl text-gray-800">₹{{ grandTotal }}</span></p>
+    <p class="font-semibold text-xl text-gray-500">Saved: <span class="text-3xl text-gray-800">₹{{ saved }}</span></p>
+    <button (click)="goToCheckout()" class="px-6 mt-2 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold active:scale-90 transition duration-200 ease-in-out">Next</button>
+  </div>
+</div>
+<div
+  *ngIf="cartItems.length == 0"
+  class="w-full flex justify-center items-center h-96"
+>
+  <h1 class="text-2xl text-gray-400">No Items in Cart</h1>
+</div>

@@ -1,0 +1,73 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="w-full md:w-7/12 md:mx-auto">
+    <h2 class="text-3xl font-semibold mb-2">Add Product</h2>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()"
+      class="bg-white shadow-md rounded-lg w-full p-4 space-y-4">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="name" class="block text-sm font-medium text-gray-700">Name</nz-form-label>
+        <nz-form-control nzErrorTip="Name should be 5-34 characters long">
+          <input nz-input formControlName="name" id="name" type="text" name="name"
+            class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="image" class="block text-sm font-medium text-gray-700">Image</nz-form-label>
+        <nz-form-control nzErrorTip="Image is required">
+          <input nz-input (change)="onFileChange($event)" id="image" type="file" name="image"
+            class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="price" class="block text-sm font-medium text-gray-700">Price ( in INR
+          )</nz-form-label>
+        <nz-form-control nzErrorTip="Add relevent price">
+          <input nz-input formControlName="price" id="price" type="number" name="price"
+            class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="discount" class="block text-sm font-medium text-gray-700">Discount (Percentage -
+          %)</nz-form-label>
+        <nz-form-control nzErrorTip="Add discount if there is, otherwise 0">
+          <input nz-input formControlName="discount" id="discount" type="number" name="discount"
+            class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="totalstock" class="block text-sm font-medium text-gray-700">Total Stock</nz-form-label>
+        <nz-form-control nzErrorTip="Mention total stock available">
+          <input nz-input formControlName="totalstock" id="totalstock" type="number" name="totalstock"
+            class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="description"
+          class="block text-sm font-medium text-gray-700">Description</nz-form-label>
+        <nz-form-control nzErrorTip="Description should be 5-96 characters long">
+          <textarea nz-input formControlName="description" id="description" name="description"
+            class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="rating" class="block text-sm font-medium text-gray-700">Rating</nz-form-label>
+        <nz-form-control nzErrorTip="Show relevent rating">
+          <nz-rate formControlName="rating" id="rating"></nz-rate>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <div nz-row nzJustify="center">
+        <button nz-button nzType="primary"
+          class="px-4 py-2 rounded-md bg-gray-800 text-white hover:bg-gray-700  active:scale-90 transition duration-200 ease-in-out">Add
+          Product</button>
+        <button nz-button (click)="onResetForm()" nzType="primary"
+          class="px-4 py-2 ml-8 rounded-md bg-red-500 text-white hover:bg-red-600  active:scale-90 transition duration-200 ease-in-out">Reset Form</button>
+      </div>
+    </form>
+  </div>
+</div>

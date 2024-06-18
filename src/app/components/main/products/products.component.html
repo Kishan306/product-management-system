@@ -1,0 +1,62 @@
+<button (click)="goToTop()" [hidden]="!showGoTopButton"
+  class="fixed bottom-4 right-4 bg-gray-700 text-white px-4 py-2 rounded-md z-10 shadow-md hover:bg-gray-800 transition duration-300">
+  <i class="pi pi-arrow-up mr-1"></i>
+  Go to Top
+</button>
+<div class="flex flex-col md:flex-row justify-between p-6">
+
+      <h2 class="md:ml-24 mb-8 text-3xl md:text-5xl font-bold">Products</h2>
+
+    <nz-input-group nzSearch class="max-w-lg">
+        <input
+          nz-input
+          placeholder="Search products..."
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearch()"
+          class="h-12 text-lg"
+        />
+      </nz-input-group>
+</div>
+<div *ngIf="filteredProducts.length > 0" class="flex justify-start flex-wrap p-12 md:px-32">
+  <nz-card
+    *ngFor="let product of filteredProducts"
+    class="w-72 relative border-none shadow-lg rounded-lg m-7 hover:shadow-2xl transition duration-300"
+  >
+    <div *ngIf="product.discount != 0" class="absolute -rotate-45 bg-red-500 text-white font-semibold rounded-md top-3 -left-4 px-2 py-1">
+      {{product.discount}}% OFF !!
+    </div>
+    <div class="h-64 flex items-center ">
+      <img src="{{ product.imageUrl }}" alt="{{ product.name }}" />
+    </div>
+    <div class="h-[270px] relative">
+      <div class="h-[70px]">
+        <h3 class="font-bold mt-2 text-2xl">{{ product.name }}</h3>
+      </div>
+      <div class="flex flex-row">
+      <p class="text-lg font-medium mr-2">₹{{ actualPrice(product.price, product.discount || 0) }}</p>
+      <s *ngIf="product.discount !== 0" class="text-lg font-medium">₹{{ product.price }}</s>
+      </div>
+      <nz-rate [ngModel]='product.rating' nzDisabled=""></nz-rate>
+      <div class="h-[60px]">
+        <p class="text-sm mt-2">{{ product.description }}</p>
+      </div>
+      <div class="p-2 mt-2 flex bottom-2 justify-around">
+        <button (click)="addToCart(product.id)" nz-button nzType="primary" class="w-5/12 rounded-xl active:scale-90 transition duration-200 ease-in-out" nz-tooltip nzTooltipTitle="Add to Cart" [disabled]="product.totalstock == 0" nzTooltipPlacement="bottomLeft"><i class="pi pi-shopping-cart"></i></button>
+        <button (click)="addToWishlist(product.id)" nz-button nzType="primary" class="w-5/12 rounded-xl active:scale-90 transition duration-200 ease-in-out" nz-tooltip nzTooltipTitle="Add to Wishlist" nzTooltipPlacement="bottomLeft">
+          <i class="pi pi-heart"></i>
+        </button>
+      </div>
+      <div class="absolute bottom-0">
+        <p *ngIf="product.totalstock ==0" class="text-sm mt-2 text-red-600">Out of Stock!!</p>
+        <p *ngIf="product.totalstock<=5 && product.totalstock>0" class="text-sm mt-2 text-red-600">Only {{product.totalstock}} left!!</p>
+        <p *ngIf="product.totalstock > 5" class="text-sm mt-2">In Stock: {{product.totalstock}}</p>
+      </div>
+    </div>
+  </nz-card>
+</div>
+
+<div>
+  <div class="w-1/2 ml-auto">
+    <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="allProducts.length"  [nzPageSize]="pageSize" (nzPageIndexChange)="onPageChange($event)"></nz-pagination>
+  </div>
+</div>
