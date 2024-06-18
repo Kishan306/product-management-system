@@ -21,12 +21,7 @@ export const appConfig: ApplicationConfig = {
       provide: FIREBASE_OPTIONS,
       useValue: 
       {
-        "apiKey": "AIzaSyAlZhq2nsi6Hl3dAeEoUFQzje1NaxSE-N0",
-        "authDomain": "product-management-syste-4c68c.firebaseapp.com",
-        "projectId": "product-management-syste-4c68c",
-        "storageBucket": "product-management-syste-4c68c.appspot.com",
-        "messagingSenderId": "122627380192",
-        "appId": "1:122627380192:web:1cab19dc5a8f3562365185"
+        //add your firebase environment key here
       }
     },
     provideAuth(() => getAuth()), 
